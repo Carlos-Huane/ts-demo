@@ -105,3 +105,94 @@ let listaTareasNuevas : Tarea[] = [
 listaTareasNuevas.forEach((tarea: Tarea, index: number) => {console.log(`${index}-${tarea.nombre}`)});
 //todos los métodos de js para iterar son válidos for in, for, map, filter,reduce, etc...
 // NOTA: CADA VEZ QUE SE DECLARA UNA VARIABLE DEBES INDICARLE EL TIPO ( NO ES OBLIGATORIO, PERO PARA ESO SIRVE TS);
+
+
+// FUNCTIONS 
+
+function saludarPersona(nombre: string) {
+    console.log(`Hola ${nombre}`);
+}
+// saludarPersona("Martin")
+
+//valor por defecto 
+function despedirPersona(nombre: string = "defecto") {
+    console.log(nombre);
+}
+//despedirPersona() ---> output = "defecto"
+//despedirPersona("hola") ---> output = "hola"
+function despedidaOpcional(nombre?: string) { // <> function despedidaOpcional(nombre: (string | undefined)){...}
+    if(nombre) {
+        console.log(`adios ${nombre}`);
+    } else {
+        console.log("adios");
+    }
+}
+function variosParams(nombre: string, apellidos?:string, edad: number = 18) {
+    if(apellidos) {
+        console.log(`${nombre} ${apellidos} tiene ${edad}`);
+    } else {
+        console.log(`${nombre} tiene ${edad}`);
+    }
+}
+// variosParams("Martin") --> "Martin tiene 18 años"
+// variosParams("Martin, "San Jose") --> "Martin San Jose tiene 18 años"
+// variosParams("Martin", undefined, 30) --> "Martin tiene 30 años"
+// function ejemplo(a: string | number){...}
+
+// tambien puedes asignar que tipo de valor debe retornar una función, así : 
+// nota: con la función flecha es similar const prueba = (...): string => {...}
+function ejemploReturn (nombre: string, apellido: string) : (string | number) {
+    return `Mi nombre es ${nombre} + ${apellido}`;
+}
+//lo que devuelve la función callback es un string, ojo que está definido dentro de ese arrowfunction como parametro
+// otra punto es que (cobrar) es una función y puedes llamarla de nuevo dentro de obtenerSalario
+function  obtenerSalario(cobrar : () => string) {} 
+
+// // Empleado es un type 
+// const cobrarEmpleado = (empleado: Empleado) => {
+//     console.log("hola");
+    
+// }
+ 
+// Async Functions 
+
+async function ejemploAsync(): Promise<string> {
+    await console.log("tarea a completar antes de seguir con la secuencia de instrucciones") //Await
+    return "completado";
+}
+// Generators
+
+function * ejemploGenerator() {
+    //yield --> para emitir errorres
+    let index = 0;
+    while(index < 5) {
+        //Emitimos un valor incrementado
+        yield index++;
+    }
+}
+//Guardamos la función generadora en una variable
+let generadora = ejemploGenerator();
+//Accedemos a valores emitidos
+console.log(generadora.next().value); //0
+console.log(generadora.next().value); //1
+console.log(generadora.next().value); //2
+console.log(generadora.next().value); //3
+
+// Worker
+function* watcher(valor: number){
+    yield valor; //emitimos el valor inicial
+    yield* worker(valor); //llamamos a las emisiones del worker para que emita otros valores
+    yield valor + 4;
+} 
+function* worker(valor: number) {
+    yield valor + 1;
+    yield valor + 2;
+    yield valor + 3;
+}
+let generatorSaga = watcher(0);
+console.log(generatorSaga.next().value); //0 lo ha hecho el watcher
+console.log(generatorSaga.next().value); //1 ... worker
+console.log(generatorSaga.next().value); //2 ... worker
+console.log(generatorSaga.next().value); //3 ... worker
+console.log(generatorSaga.next().value); //4 ... watcher
+
