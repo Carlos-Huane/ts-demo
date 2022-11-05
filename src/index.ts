@@ -196,3 +196,27 @@ console.log(generatorSaga.next().value); //2 ... worker
 console.log(generatorSaga.next().value); //3 ... worker
 console.log(generatorSaga.next().value); //4 ... watcher
 
+// Persistencia de datos
+
+// 1. localStorage ---> almacena los datos en el navegador
+// 2. SesionStorage ---> La diferencia radica en la sesión del navegador. Es decir, los datos
+// se persisten en la sesion de navegador
+// 3. Cookies ---> Tienen una fecha de caducidad y tambien tienen un ámbito de URL
+
+// localStorage 
+/*
+    function guardad(): void {
+        localStorage.setItem('user', "carlos");
+        // guardas en la localstorage un objeto asi : 
+        // {user: carlos};
+    }
+    function leer(): void {
+        let nombre = localStorage.get("user");
+        // guardas "carlos" en la variable nombre
+    }
+    function eliminar(): void {
+        localStorage.removeItem("user"); 
+        // para eliminar la prop user del localStorage
+    }
+    //nota: tambien hay actualizar y otras más, te lo dejo de tarea
+*/
