@@ -220,3 +220,61 @@ console.log(generatorSaga.next().value); //4 ... watcher
     }
     //nota: tambien hay actualizar y otras más, te lo dejo de tarea
 */
+
+// CLASES
+
+class Curso {
+    //Propiedad de clase
+    nombre: string;
+    horas: number;
+    //Constructor
+    constructor(nombre: string, horas: number) {
+        //Inicializamos las propiedades
+        this.nombre = nombre;
+        this.horas = horas;
+    }
+}
+class Estudiante {
+    nombre: string;
+    apellidos?: string;
+    cursos: Curso[];
+    private ID: string = "123";
+    constructor(nombre: string,cursos: Curso[], apellidos?: string) {
+        this.nombre = nombre;
+        if(this.apellidos)this.apellidos = apellidos;
+        this.cursos = cursos;
+    }
+    get horasEstudiadas(): number{
+        let horasEstudiadas = 0;
+        this.cursos.forEach((curso: Curso) => {
+            horasEstudiadas+= curso.horas
+        })
+        return horasEstudiadas;
+    }
+    get ID_ESTUDIANTE (): string{
+        return this.ID;
+    }
+    // el set ID_ESTUDIANTE(id: string){this.ID= id}  el set setea las variables y el get obtiene 
+    // las variables privadas solo son accedidas desde dentro de la clase, no desde fuera
+    // por defecto los props de las clases son públicas
+}
+//Creamos un curso;
+const cursoTS: Curso = new Curso("Typescript", 15); //Nota: no hace falta que le agreges el tipo Curso, ya es inplicito;
+const cursoJS: Curso = new Curso("Javascript", 20);
+
+const listaCurso: Curso[] = [];
+listaCurso.push(cursoTS, cursoJS); // [Lista de cursos]
+
+//Creamos un estudiante
+const Martin: Estudiante = new Estudiante("Martín", listaCurso, "San Jose");
+console.log(`${Martin.nombre} estudia`)
+
+Martin.cursos.forEach((curso: Curso) => {
+    console.log(`-${curso.nombre} ${curso.horas} horas`);
+})
+
+//Saber la instancia de un objeto/variable;
+// -TypeOf
+// -InstanceOf
+
+
