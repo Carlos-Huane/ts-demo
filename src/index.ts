@@ -43,10 +43,17 @@ enum PuestoCarrera {
 let puestoMaraton: PuestoCarrera = PuestoCarrera.Tercero //3 (si no hubieses puesto nota asigna al primero 0, segundo 1 y tercero 2);
 
 // Interfaces
+// Nota: son usas para complementar en las clases.
 interface Tarea {
     nombre: string, 
     estado: Estados,
     urgencia: number
+}
+interface ITarea {
+    titulo: string,
+    description?: string,
+    urgencia?: PuestoCarrera,
+    resumen: () => string
 }
 // Podemos crear variables que sigan la interface Tarea
 let tarea1: Tarea = {
@@ -54,8 +61,9 @@ let tarea1: Tarea = {
     estado: Estados.Pendiente,
     urgencia: 10
 }
-
 // Types of Typescript
+// NOTA: Types no puede ser implementada en clases, no llega a la complejidad de una clase, no requiere 
+// de crear instancias, constructores, métodos, solo son un almacen de datos un poco más complejo que un objeto normal
 type Product = {
     precio: number,
     nombre: string
@@ -204,7 +212,7 @@ console.log(generatorSaga.next().value); //4 ... watcher
 // 3. Cookies ---> Tienen una fecha de caducidad y tambien tienen un ámbito de URL
 
 // localStorage 
-/*
+
     function guardad(): void {
         localStorage.setItem('user', "carlos");
         // guardas en la localstorage un objeto asi : 
@@ -219,7 +227,7 @@ console.log(generatorSaga.next().value); //4 ... watcher
         // para eliminar la prop user del localStorage
     }
     //nota: tambien hay actualizar y otras más, te lo dejo de tarea
-*/
+
 
 // CLASES
 
@@ -278,3 +286,71 @@ Martin.cursos.forEach((curso: Curso) => {
 // -InstanceOf
 
 
+//Herencia, polimorfismo, decoradores e interfaces
+
+class Person {
+    nombre: string;
+    apellido: string;
+    edad: number;
+    
+    constructor(nombre: string, apellido: string, edad: number) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.edad = edad;
+    }
+    saludar(): void{
+        console.log(`Hola ${this.nombre} ${this.apellido}`);
+    }
+}
+class Empleado extends Person{
+    sueldo: number;
+    constructor(nombre: string, apellido: string, edad: number, sueldo: number) {
+        super(nombre, apellido, edad);
+        this.sueldo = sueldo;
+    }
+    saludar(): void {
+        super.saludar();
+        console.log(`Mi sueldo es de ${this.sueldo}`)
+    }
+}
+class Jefe extends Person{
+    empleados: Empleado[] = [];
+    constructor(nombre: string, apellido: string, edad: number) {
+        super(nombre, apellido, edad);
+    }
+}
+//ojo el super es para que puedas aplicar al extendido Person las props nombre, apellido, edad;
+//Empleado tambien adquiere el método saludar; 
+
+// HERENCIA Y POLIMORFISMO
+let empleado1 = new Empleado("Martin", "Jose", 30, 2000);
+
+let jefe = new Jefe("Pablo", "Garcia", 50);
+empleado1.saludar() //Herencia especificado en Empleado--sino tuviese un método la clase Empleado (saludar) tomaria del padre (class Person)
+jefe.saludar(); //Herencia de persona
+
+
+//OJO QUE TAMBIEN PUEDES IMPLEMENTAR ENUM, INTERFACES EN UNA CLASE EJEMPLO:
+//debe tener todos los datos de ITarea, por que sino TS no lo permite, fijate que uso todas las props de ITarea
+class Programar implements ITarea{
+    titulo: string;
+    description?: string | undefined;
+    urgencia?: PuestoCarrera | undefined;
+
+    constructor(titulo: string, description?:string, urgencia?: PuestoCarrera){
+        this.titulo = titulo;
+        this.description = description;
+        this.urgencia = urgencia;
+    }
+    resumen = () => {
+        return "Tarea lista";
+    }
+}
+
+//DECORADORES
+//funciones declaradas a trávez de un simbolo @
+// Existen decoradores para :
+// - Clases
+// - Parámetros
+// - Métodos
+// - Propiedades 
