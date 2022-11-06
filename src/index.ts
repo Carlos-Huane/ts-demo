@@ -155,7 +155,6 @@ function ejemploReturn (nombre: string, apellido: string) : (string | number) {
 //lo que devuelve la función callback es un string, ojo que está definido dentro de ese arrowfunction como parametro
 // otra punto es que (cobrar) es una función y puedes llamarla de nuevo dentro de obtenerSalario
 function  obtenerSalario(cobrar : () => string) {} 
-
 // // Empleado es un type 
 // const cobrarEmpleado = (empleado: Empleado) => {
 //     console.log("hola");
